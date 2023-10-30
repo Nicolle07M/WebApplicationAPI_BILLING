@@ -19,6 +19,6 @@ namespace WebApplicationAPI_BILLING.Models
 
         [ForeignKey("ClienteId")]
         public Cliente? Cliente { get; set; }
-
+        public virtual ICollection<OrdenItem> OrdenItems { get; set; }
     }
 }

@@ -92,10 +92,48 @@ namespace WebApplicationAPI_BILLING.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrdenItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    OrdenId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdenItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrdenItems_OrdenesC_OrdenId",
+                        column: x => x.OrdenId,
+                        principalTable: "OrdenesC",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OrdenItems_Productos_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Productos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrdenesC_ClienteId",
                 table: "OrdenesC",
                 column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdenItems_OrdenId",
+                table: "OrdenItems",
+                column: "OrdenId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdenItems_ProductId",
+                table: "OrdenItems",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_ProveedorId",
@@ -106,6 +144,9 @@ namespace WebApplicationAPI_BILLING.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "OrdenItems");
+
             migrationBuilder.DropTable(
                 name: "OrdenesC");
 

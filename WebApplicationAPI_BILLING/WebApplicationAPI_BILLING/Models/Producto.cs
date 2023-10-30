@@ -19,5 +19,6 @@ namespace WebApplicationAPI_BILLING.Models
         public bool EsDescontinuado { get; set; } = false;
         [ForeignKey("ProveedorId ")]
         public Proveedor? Proveedor { get; set; }
+        public ICollection<OrdenItem>? OrdenItems { get; set; }
     }
 }

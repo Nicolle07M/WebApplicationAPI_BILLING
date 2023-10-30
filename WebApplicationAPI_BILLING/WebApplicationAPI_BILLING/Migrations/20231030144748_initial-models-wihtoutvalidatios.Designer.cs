@@ -12,7 +12,7 @@ using WebApplicationAPI_BILLING.Data;
 namespace WebApplicationAPI_BILLING.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231030124235_initial-models-wihtoutvalidatios")]
+    [Migration("20231030144748_initial-models-wihtoutvalidatios")]
     partial class initialmodelswihtoutvalidatios
     {
         /// <inheritdoc />
@@ -88,6 +88,38 @@ namespace WebApplicationAPI_BILLING.Migrations
                     b.HasIndex("ClienteId");
 
                     b.ToTable("OrdenesC");
+                });
+
+            modelBuilder.Entity("WebApplicationAPI_BILLING.Models.OrdenItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("OrdenId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrdenId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrdenItems");
                 });
 
             modelBuilder.Entity("WebApplicationAPI_BILLING.Models.Producto", b =>
@@ -181,6 +213,23 @@ namespace WebApplicationAPI_BILLING.Migrations
                     b.Navigation("Cliente");
                 });
 
+            modelBuilder.Entity("WebApplicationAPI_BILLING.Models.OrdenItem", b =>
+                {
+                    b.HasOne("WebApplicationAPI_BILLING.Models.OrdenC", "OrdenC")
+                        .WithMany("OrdenItems")
+                        .HasForeignKey("OrdenId");
+
+                    b.HasOne("WebApplicationAPI_BILLING.Models.Producto", "Producto")
+                        .WithMany("OrdenItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrdenC");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("WebApplicationAPI_BILLING.Models.Producto", b =>
                 {
                     b.HasOne("WebApplicationAPI_BILLING.Models.Proveedor", "Proveedor")
@@ -195,6 +244,16 @@ namespace WebApplicationAPI_BILLING.Migrations
             modelBuilder.Entity("WebApplicationAPI_BILLING.Models.Cliente", b =>
                 {
                     b.Navigation("OrdenesC");
+                });
+
+            modelBuilder.Entity("WebApplicationAPI_BILLING.Models.OrdenC", b =>
+                {
+                    b.Navigation("OrdenItems");
+                });
+
+            modelBuilder.Entity("WebApplicationAPI_BILLING.Models.Producto", b =>
+                {
+                    b.Navigation("OrdenItems");
                 });
 
             modelBuilder.Entity("WebApplicationAPI_BILLING.Models.Proveedor", b =>
