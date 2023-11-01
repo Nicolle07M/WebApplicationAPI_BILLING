@@ -24,7 +24,7 @@ namespace WebApplicationAPI_BILLING.Controllers
 
         // GET: api/Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetCustomers()
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             if (_context.Clientes == null)
             {
@@ -35,33 +35,33 @@ namespace WebApplicationAPI_BILLING.Controllers
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCustomer(int id)
+        public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
             if (_context.Clientes == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Clientes.FindAsync(id);
+            var Cliente = await _context.Clientes.FindAsync(id);
 
-            if (customer == null)
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return Cliente;
         }
 
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Cliente customer)
+        public async Task<IActionResult> PutCliente(int id, Cliente Cliente)
         {
-            if (id != customer.Id)
+            if (id != Cliente.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(Cliente).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace WebApplicationAPI_BILLING.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!ClienteExists(id))
                 {
                     return NotFound();
                 }
@@ -85,39 +85,39 @@ namespace WebApplicationAPI_BILLING.Controllers
         // POST: api/Clientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCustomer(Cliente customer)
+        public async Task<ActionResult<Cliente>> PostCliente(Cliente Cliente)
         {
             if (_context.Clientes == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Customers'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Clientes'  is null.");
             }
-            _context.Clientes.Add(customer);
+            _context.Clientes.Add(Cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return CreatedAtAction("GetCliente", new { id = Cliente.Id }, Cliente);
         }
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteCliente(int id)
         {
             if (_context.Clientes == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Clientes.FindAsync(id);
-            if (customer == null)
+            var Cliente = await _context.Clientes.FindAsync(id);
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            _context.Clientes.Remove(customer);
+            _context.Clientes.Remove(Cliente);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CustomerExists(int id)
+        private bool ClienteExists(int id)
         {
             return (_context.Clientes?.Any(e => e.Id == id)).GetValueOrDefault();
         }

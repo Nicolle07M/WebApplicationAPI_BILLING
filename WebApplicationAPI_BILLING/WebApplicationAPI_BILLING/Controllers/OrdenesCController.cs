@@ -21,9 +21,9 @@ namespace WebApplicationAPI_BILLING.Controllers
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/ordenCs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrdenC>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<OrdenC>>> GetordenCs()
         {
             if (_context.OrdenesC == null)
             {
@@ -32,37 +32,37 @@ namespace WebApplicationAPI_BILLING.Controllers
             return await _context.OrdenesC.Include(oi => oi.OrdenItems).ToListAsync();
         }
 
-        // GET: api/Orders/5
+        // GET: api/ordenCs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrdenC>> GetOrder(int id)
+        public async Task<ActionResult<OrdenC>> GetordenC(int id)
         {
             if (_context.OrdenesC == null)
             {
                 return NotFound();
             }
-            // var order = await _context.Orders.Include(oi => oi.OrderItems).FindAsync(id);
-            var order = await _context.OrdenesC.Include(oi => oi.OrdenItems)
+            // var ordenC = await _context.ordenCs.Include(oi => oi.ordenCItems).FindAsync(id);
+            var ordenC = await _context.OrdenesC.Include(oi => oi.OrdenItems)
                                      .FirstOrDefaultAsync(o => o.Id == id); // Asumiendo que el nombre del campo es 'Id'.
 
-            if (order == null)
+            if (ordenC == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return ordenC;
         }
 
-        // PUT: api/Orders/5
+        // PUT: api/ordenCs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, OrdenC order)
+        public async Task<IActionResult> PutordenC(int id, OrdenC ordenC)
         {
-            if (id != order.Id)
+            if (id != ordenC.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(ordenC).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +70,7 @@ namespace WebApplicationAPI_BILLING.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!ordenCExists(id))
                 {
                     return NotFound();
                 }
@@ -83,42 +83,42 @@ namespace WebApplicationAPI_BILLING.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/ordenCs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrdenC>> PostOrder(OrdenC order)
+        public async Task<ActionResult<OrdenC>> PostordenC(OrdenC ordenC)
         {
             if (_context.OrdenesC == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.ordenCs'  is null.");
             }
-            _context.OrdenesC.Add(order);
+            _context.OrdenesC.Add(ordenC);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetordenC", new { id = ordenC.Id }, ordenC);
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: api/ordenCs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteordenC(int id)
         {
             if (_context.OrdenesC == null)
             {
                 return NotFound();
             }
-            var order = await _context.OrdenesC.FindAsync(id);
-            if (order == null)
+            var ordenC = await _context.OrdenesC.FindAsync(id);
+            if (ordenC == null)
             {
                 return NotFound();
             }
 
-            _context.OrdenesC.Remove(order);
+            _context.OrdenesC.Remove(ordenC);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderExists(int id)
+        private bool ordenCExists(int id)
         {
             return (_context.OrdenesC?.Any(e => e.Id == id)).GetValueOrDefault();
         }

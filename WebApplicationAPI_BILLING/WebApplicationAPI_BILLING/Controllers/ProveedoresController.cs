@@ -38,39 +38,39 @@ using Microsoft.EntityFrameworkCore;
             {
                 return NotFound();
             }
-            var supplier = await _context.Proveedores.FindAsync(id);
+            var Proveedor = await _context.Proveedores.FindAsync(id);
 
-            if (supplier is null)
+            if (Proveedor is null)
             {
                 return NotFound();
             }
 
-            return supplier;
+            return Proveedor;
         }
 
-        // POST api/<SuppliersController>
+        // POST api/<ProveedorsController>
         [HttpPost]
-        public async Task<ActionResult<Proveedor>> Post([FromBody] Proveedor supplier)
+        public async Task<ActionResult<Proveedor>> Post([FromBody] Proveedor Proveedor)
         {
             if (_context.Proveedores == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Suppliers'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Proveedores'  is null.");
             }
-            _context.Proveedores.Add(supplier);
+            _context.Proveedores.Add(Proveedor);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("Get", new { id = supplier.Id }, supplier);
+            return CreatedAtAction("Get", new { id = Proveedor.Id }, Proveedor);
         }
 
-        // PUT api/<SuppliersController>/5
+        // PUT api/<ProveedorsController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Proveedor supplier)
+        public async Task<IActionResult> Put(int id, [FromBody] Proveedor Proveedor)
         {
 
-            if (id != supplier.Id)
+            if (id != Proveedor.Id)
             {
                 return BadRequest();
             }
-            _context.Entry(supplier).State = EntityState.Modified;
+            _context.Entry(Proveedor).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
@@ -78,7 +78,7 @@ using Microsoft.EntityFrameworkCore;
             catch (DbUpdateConcurrencyException)
             {
 
-                if (!SupplierExists(id))
+                if (!ProveedorExists(id))
                 {
                     return NotFound();
                 }
@@ -90,12 +90,12 @@ using Microsoft.EntityFrameworkCore;
             return NoContent();
         }
 
-        private bool SupplierExists(int id)
+        private bool ProveedorExists(int id)
         {
             return (_context.Proveedores?.Any(s => s.Id == id)).GetValueOrDefault();
         }
 
-        // DELETE api/<SuppliersController>/5
+        // DELETE api/<ProveedorsController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -104,13 +104,13 @@ using Microsoft.EntityFrameworkCore;
                 return NotFound();
             }
 
-            var supplier = await _context.Proveedores.FirstOrDefaultAsync(s => s.Id == id);
-            if (supplier == null)
+            var Proveedor = await _context.Proveedores.FirstOrDefaultAsync(s => s.Id == id);
+            if (Proveedor == null)
             {
                 return NotFound();
             }
 
-            _context.Proveedores.Remove(supplier);
+            _context.Proveedores.Remove(Proveedor);
             await _context.SaveChangesAsync();
             return NoContent();
 

@@ -9,16 +9,16 @@ namespace WebApplicationAPI_BILLING.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public int OrderId { get; set; }
+        public int OrdenId { get; set; }
         [Required]
-        public int ProductId { get; set; }
+        public int ProductoId { get; set; }
         [Required]
-        public decimal UnitPrice { get; set; } = 0;
+        public decimal UnitPrecio { get; set; } = 0;
         [Required]
-        public int Quantity { get; set; } = 1;
+        public int Cantidad { get; set; } = 1;
         [ForeignKey("OrdenId")]
         public OrdenC? OrdenC { get; set; }
-        [ForeignKey("ProductId")]
+        [ForeignKey("ProductoId")]
         public Producto? Producto { get; set; }
     }
 }
